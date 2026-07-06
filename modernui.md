@@ -6,19 +6,16 @@
 
 # Objetivo
 
-Criar uma biblioteca de componentes e janelas modernas, reutilizável em qualquer projeto Delphi ou Lazarus, sem dependências de terceiros e com visual inspirado em aplicações atuais.
+Desenvolver uma MessageBox moderna para substituir o `MessageDlg` padrão da VCL/LCL.
 
-## Princípios
+## Objetivos
 
-- Compatível com Delphi e Lazarus/FPC
-- Sem dependências externas
-- Código limpo e organizado
-- Fácil manutenção
+- Visual moderno
+- Fácil utilização
 - API simples
-- Alto desempenho
-- Compatível com High DPI
-- Fácil personalização
-- Separação entre lógica e interface
+- Sem dependências de terceiros
+- Compatível com Delphi
+- Preparar o código para futura compatibilidade com Lazarus/FPC
 
 ---
 
@@ -27,254 +24,133 @@ Criar uma biblioteca de componentes e janelas modernas, reutilizável em qualque
 ```
 ModernUI
 │
-├── README.md
-├── CHANGELOG.md
-├── LICENSE
-│
-├── Source
-│   │
-│   ├── Core
-│   │   ├── UI.Core.pas
-│   │   ├── UI.Types.pas
-│   │   ├── UI.Colors.pas
-│   │   ├── UI.Constants.pas
-│   │   └── UI.Utils.pas
-│   │
-│   ├── Graphics
-│   │   ├── UI.Graphics.pas
-│   │   ├── UI.Drawing.pas
-│   │   ├── UI.Icons.pas
-│   │   └── UI.Animation.pas
-│   │
-│   ├── Controls
-│   │   ├── UI.Button.pas
-│   │   ├── UI.Label.pas
-│   │   ├── UI.Badge.pas
-│   │   ├── UI.Panel.pas
-│   │   └── UI.Card.pas
-│   │
-│   ├── Dialogs
-│   │   ├── UI.Message.pas
-│   │   ├── UI.Message.Form.pas
-│   │   ├── UI.InputBox.pas
-│   │   ├── UI.Progress.pas
-│   │   └── UI.Loading.pas
-│   │
-│   ├── Notifications
-│   │   └── UI.Toast.pas
-│   │
-│   └── Themes
-│       ├── UI.Theme.Light.pas
-│       ├── UI.Theme.Dark.pas
-│       └── UI.Theme.Custom.pas
-│
-├── Demo
-│   │
-│   ├── Delphi
-│   │   └── ModernUIDemo.dproj
-│   │
-│   └── Lazarus
-│       └── ModernUIDemo.lpi
-│
-├── Docs
-│   ├── Components.md
-│   ├── Colors.md
-│   ├── Themes.md
-│   └── API.md
-│
-└── Assets
-    ├── Icons
-    ├── Images
-    └── Fonts
+├── ModernUI.Message.pas
+├── ModernUI.Message.Form.pas
+├── ModernUI.Message.Form.dfm
+└── ModernUI.md
 ```
 
 ---
 
-# Roadmap
-
-## Etapa 1 - Fundação
-
-### Estrutura
-
-- [ ] Criar estrutura de pastas
-- [ ] Criar projeto Demo Delphi
-- [ ] Criar projeto Demo Lazarus
-- [ ] Criar paleta de cores
-- [ ] Criar tipos básicos
-- [ ] Criar helpers
-- [ ] Criar biblioteca gráfica
-
----
-
-## Etapa 1.1 - Message Dialog
-
-### Janela
-
-- [ ] Form sem borda
-- [ ] Cantos arredondados
-- [ ] Centralização automática
-- [ ] Fundo branco
-- [ ] Cabeçalho colorido
-- [ ] Sombra
-- [ ] High DPI
-
-### Ícones
-
-- [ ] Primary
-- [ ] Secondary
-- [ ] Success
-- [ ] Warning
-- [ ] Danger
-- [ ] Info
-
-### Botões
-
-- [ ] OK
-- [ ] Cancelar
-- [ ] Sim
-- [ ] Não
-
-### API
-
-- [ ] Criar TUIMessageType
-- [ ] Criar TUIButtons
-- [ ] Criar TUIResult
-
-- [ ] Implementar
+# API Pública
 
 ```delphi
-function Message(
-    const ATitulo : String;
-    const ATexto  : String;
-    ATipo         : TUIMessageType = mtPrimary;
-    ABotoes       : TUIButtons = mbOK;
-    AAutoCloseMS  : Integer = 0
-): TUIResult;
+type
+  TModernMessageType = (
+    mtPrimary,
+    mtSuccess,
+    mtWarning,
+    mtDanger,
+    mtInfo
+  );
+
+  TModernButtons = (
+    mbOK,
+    mbOKCancel,
+    mbYesNo
+  );
+
+  TModernResult = (
+    mrOK,
+    mrCancel,
+    mrYes,
+    mrNo
+  );
+
+function MUMessage(
+  const ATitulo : string;
+  const ATexto  : string;
+  ATipo         : TModernMessageType = mtPrimary;
+  ABotoes       : TModernButtons = mbOK
+): TModernResult;
 ```
 
 ---
 
-## Etapa 1.2 - Aparência
+# Checklist
 
-- [ ] Botões arredondados
-- [ ] Hover
-- [ ] Pressionado
-- [ ] AutoSize
-- [ ] Layout automático
-- [ ] Separadores
-- [ ] Ajuste automático da altura
-- [ ] Ajuste automático da largura
+## Estrutura
+
+- [x] Criar `ModernUI.Message.pas`
+- [x] Criar `ModernUI.Message.Form.pas`
+- [x] Criar `ModernUI.Message.Form.dfm`
 
 ---
 
-## Etapa 1.3 - Recursos
+## Janela
 
-- [ ] Fade In
-- [ ] Fade Out
-- [ ] ESC fecha
-- [ ] ENTER confirma
-- [ ] Auto Close
-- [ ] Timer
-
----
-
-## Etapa 2 - Toast
-
-- [ ] Slide
-- [ ] Fade
-- [ ] Auto Close
-- [ ] Empilhamento
-- [ ] Posições configuráveis
-- [ ] Clique para fechar
+- [x] Form sem borda (`bsNone`)
+- [x] Centralizar na tela
+- [x] Fundo branco
+- [x] Cantos arredondados
+- [ ] Sombra
+- [x] Ícone da aplicação
+- [ ] Suporte a High DPI
 
 ---
 
-## Etapa 3 - Componentes
+## Layout
 
-### Botões
-
-- [ ] Button
-
-### Texto
-
-- [ ] Label
-
-### Containers
-
-- [ ] Panel
-- [ ] Card
-
-### Indicadores
-
-- [ ] Badge
-
-### Entrada
-
-- [ ] InputBox
-
-### Progresso
-
-- [ ] Progress
-- [ ] Loading
+- [x] Cabeçalho colorido
+- [x] Título
+- [x] Ícone
+- [x] Texto
+- [x] Área dos botões
+- [x] Espaçamento automático
+- [x] Ajustar largura automaticamente
+- [x] Ajustar altura automaticamente
 
 ---
 
-## Etapa 4 - Temas
+## Ícones
 
-### Light
-
-- [ ] Implementar
-
-### Dark
-
-- [ ] Implementar
-
-### Personalizado
-
-- [ ] Paleta customizada
+- [x] Primary
+- [x] Success
+- [x] Warning
+- [x] Danger
+- [x] Info
 
 ---
 
-## Compatibilidade
+## Botões
 
-### Delphi
-
-- [ ] XE
-- [ ] XE2
-- [ ] XE7
-- [ ] 10 Seattle
-- [ ] 10.4 Sydney
-- [ ] 11 Alexandria
-- [ ] 12 Athens
-
-### Lazarus
-
-- [ ] 2.x
-- [ ] 3.x
-- [ ] 4.x
+- [x] OK
+- [x] Cancelar
+- [x] Sim
+- [x] Não
 
 ---
 
-# Padrões de Desenvolvimento
+## Funcionalidades
 
-## Convenções
+- [x] ESC fecha a janela
+- [x] ENTER confirma
+- [x] Retornar `TModernResult`
+- [x] Suporte aos tipos de botões
+- [x] Configurar cores conforme `TModernMessageType`
 
-- Todas as units iniciam com `UI.`
-- Classes iniciam com `TUI`
-- Interfaces iniciam com `IUI`
-- Helpers iniciam com `UI`
-- Nenhuma unit pode depender da aplicação final.
+---
+
+## Testes
+
+- [ ] Testar Delphi
+- [ ] Testar Lazarus/FPC
+
+---
+
+# Decisões do Projeto
+
+## Nome
+
+**ModernUI**
 
 ## Filosofia
 
-Sempre que possível:
-
-- Utilizar apenas APIs nativas.
-- Evitar componentes de terceiros.
-- Priorizar desempenho.
-- Manter compatibilidade Delphi/Lazarus.
-- Separar desenho, lógica e interface.
-- Escrever código reutilizável.
+- Código limpo
+- Componentes nativos
+- Sem bibliotecas externas
+- Fácil reutilização
+- Separação entre API e interface
 
 ---
 
@@ -283,5 +159,4 @@ Sempre que possível:
 ## v0.1
 
 - Criação da estrutura do projeto.
-- Definição da arquitetura.
-- Início da implementação do Message Dialog.
+- Desenvolvimento da Modern MessageBox.

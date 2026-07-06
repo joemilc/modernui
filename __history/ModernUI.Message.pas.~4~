@@ -1,0 +1,37 @@
+unit ModernUI.Message;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs,
+  ModernUI.Types;
+
+type
+
+function MUMessage(
+  const ATitulo : string;
+  const ATexto  : string;
+  ATipo         : TModernMessageType = mtPrimary;
+  ABotoes       : TModernButtons = mbOK
+): TModernResult;
+
+implementation
+
+uses
+  ModernUI.Message.Form;
+
+function MUMessage(const ATitulo, ATexto: string; ATipo: TModernMessageType; ABotoes: TModernButtons): TModernResult;
+var
+  Form: TModernMessageForm;
+begin
+  Form := TModernMessageForm.Create(nil);
+  try
+    Form.Configurar(ATitulo, ATexto, ATipo, ABotoes);
+    Result := Form.Mostrar;
+  finally
+    Form.Free;
+  end;
+end;
+
+end.
