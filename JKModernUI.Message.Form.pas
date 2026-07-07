@@ -1,11 +1,11 @@
-﻿unit ModernUI.Message.Form;
+﻿unit JKModernUI.Message.Form;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls,
-  ModernUI.Message;
+  JKModernUI.Message;
 
 const
   CORNER_RADIUS = 25;
@@ -14,6 +14,7 @@ const
   BS_DANGER  = $004535dc;  // #dc3545
 
 type
+
   TModernMessageForm = class(TForm)
     lblTitle: TLabel;
     imgIcon: TImage;
@@ -88,6 +89,8 @@ begin
   shpOK.Pen.Color := CorBorda;
   shpOK.Brush.Color := clWhite;
   shpOK.Cursor := crHandPoint;
+  lblOK.Transparent := False;
+  lblOK.Color := shpOK.Brush.Color;
   lblOK.Font.Color := CorBorda;
   lblOK.Font.Style := [fsBold];
   lblOK.Cursor := crHandPoint;
@@ -96,6 +99,8 @@ begin
   shpCancel.Pen.Color := BS_DANGER;
   shpCancel.Brush.Color := clWhite;
   shpCancel.Cursor := crHandPoint;
+  lblCancel.Transparent := False;
+  lblCancel.Color := shpCancel.Brush.Color;
   lblCancel.Font.Color := BS_DANGER;
   lblCancel.Font.Style := [];
   lblCancel.Cursor := crHandPoint;
@@ -104,6 +109,8 @@ begin
   shpYes.Pen.Color := CorBorda;
   shpYes.Brush.Color := clWhite;
   shpYes.Cursor := crHandPoint;
+  lblYes.Transparent := False;
+  lblYes.Color := shpYes.Brush.Color;
   lblYes.Font.Color := CorBorda;
   lblYes.Font.Style := [fsBold];
   lblYes.Cursor := crHandPoint;
@@ -112,6 +119,8 @@ begin
   shpNo.Pen.Color := BS_DANGER;
   shpNo.Brush.Color := clWhite;
   shpNo.Cursor := crHandPoint;
+  lblNo.Transparent := False;
+  lblNo.Color := shpNo.Brush.Color;
   lblNo.Font.Color := BS_DANGER;
   lblNo.Font.Style := [];
   lblNo.Cursor := crHandPoint;
@@ -322,20 +331,32 @@ var
 begin
   CorBorda := GetBorderColor;
 
+  lblTitle.Transparent := False;
+  lblTitle.Color := CorBorda;
+  lblTitle.Font.Color := clWhite;
+
   // OK button follows form color
   shpOK.Pen.Color := CorBorda;
+  shpOK.Brush.Color := clWhite;
+  lblOK.Color := shpOK.Brush.Color;
   lblOK.Font.Color := CorBorda;
 
   // Cancel button always Danger
   shpCancel.Pen.Color := BS_DANGER;
+  shpCancel.Brush.Color := clWhite;
+  lblCancel.Color := shpCancel.Brush.Color;
   lblCancel.Font.Color := BS_DANGER;
 
   // Yes button follows form color
   shpYes.Pen.Color := CorBorda;
+  shpYes.Brush.Color := clWhite;
+  lblYes.Color := shpYes.Brush.Color;
   lblYes.Font.Color := CorBorda;
 
   // No button always Danger
   shpNo.Pen.Color := BS_DANGER;
+  shpNo.Brush.Color := clWhite;
+  lblNo.Color := shpNo.Brush.Color;
   lblNo.Font.Color := BS_DANGER;
 
   Invalidate; // Force repaint
@@ -476,48 +497,56 @@ end;
 procedure TModernMessageForm.shpOKMouseEnter(Sender: TObject);
 begin
   shpOK.Brush.Color := GetBorderColor;
+  lblOK.Color := shpOK.Brush.Color;
   lblOK.Font.Color := clWhite;
 end;
 
 procedure TModernMessageForm.shpOKMouseLeave(Sender: TObject);
 begin
   shpOK.Brush.Color := clWhite;
+  lblOK.Color := shpOK.Brush.Color;
   lblOK.Font.Color := GetBorderColor;
 end;
 
 procedure TModernMessageForm.shpCancelMouseEnter(Sender: TObject);
 begin
   shpCancel.Brush.Color := BS_DANGER;
+  lblCancel.Color := shpCancel.Brush.Color;
   lblCancel.Font.Color := clWhite;
 end;
 
 procedure TModernMessageForm.shpCancelMouseLeave(Sender: TObject);
 begin
   shpCancel.Brush.Color := clWhite;
+  lblCancel.Color := shpCancel.Brush.Color;
   lblCancel.Font.Color := BS_DANGER;
 end;
 
 procedure TModernMessageForm.shpYesMouseEnter(Sender: TObject);
 begin
   shpYes.Brush.Color := GetBorderColor;
+  lblYes.Color := shpYes.Brush.Color;
   lblYes.Font.Color := clWhite;
 end;
 
 procedure TModernMessageForm.shpYesMouseLeave(Sender: TObject);
 begin
   shpYes.Brush.Color := clWhite;
+  lblYes.Color := shpYes.Brush.Color;
   lblYes.Font.Color := GetBorderColor;
 end;
 
 procedure TModernMessageForm.shpNoMouseEnter(Sender: TObject);
 begin
   shpNo.Brush.Color := BS_DANGER;
+  lblNo.Color := shpNo.Brush.Color;
   lblNo.Font.Color := clWhite;
 end;
 
 procedure TModernMessageForm.shpNoMouseLeave(Sender: TObject);
 begin
   shpNo.Brush.Color := clWhite;
+  lblNo.Color := shpNo.Brush.Color;
   lblNo.Font.Color := BS_DANGER;
 end;
 

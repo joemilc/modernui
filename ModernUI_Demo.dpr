@@ -3,7 +3,10 @@ program ModernUI_Demo;
 uses
   Vcl.Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  ModernUI.Message in 'ModernUI.Message.pas';
+  JKModernUI.Message in 'JKModernUI.Message.pas',
+  JKModernUI.Toast in 'JKModernUI.Toast.pas',
+  JKModernUI.Message.Form in 'JKModernUI.Message.Form.pas' {ModernMessageForm},
+  JKModernUI.Toast.Form in 'JKModernUI.Toast.Form.pas' {ModernToastForm};
 
 {$R *.res}
 

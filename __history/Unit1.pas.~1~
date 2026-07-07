@@ -31,7 +31,7 @@ implementation
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // Mensagem primária com botão OK
-  JKMUMessage('Aviso', 'Esta é uma mensagem primária.', mtPrimary, mbOK);
+  MUMessage('Aviso', 'Esta é uma mensagem primária.', mtPrimary, mbOK);
 
   // Mensagem de sucesso com botão OK
   JKMUMessage('Sucesso', 'Operação concluída com sucesso!', mtSuccess, mbOK);

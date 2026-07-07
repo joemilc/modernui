@@ -11,14 +11,24 @@ object Form1: TForm1
   Font.Name = 'Segoe UI'
   Font.Style = []
   Position = poScreenCenter
+  PixelsPerInch = 96
   TextHeight = 15
   object Button1: TButton
     Left = 56
     Top = 88
-    Width = 75
+    Width = 121
     Height = 25
-    Caption = 'Button1'
+    Caption = 'Exemplos Message'
     TabOrder = 0
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 56
+    Top = 128
+    Width = 121
+    Height = 25
+    Caption = 'Exemplos Toast'
+    TabOrder = 1
+    OnClick = Button2Click
   end
 end

@@ -5,12 +5,21 @@
     <Transaction>2026/02/06 14:20:17.000.380,=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2026/02/24 10:04:23.000.997,=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
     <Transaction>2026/07/06 16:57:28.000.893,=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2026/07/06 17:03:53.000.171,C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.pas=D:\Joemil\TestesDelphi\modernui\Unit1.pas</Transaction>
-    <Transaction>2026/07/06 17:03:53.000.171,C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.dfm=D:\Joemil\TestesDelphi\modernui\Unit1.dfm</Transaction>
-    <Transaction>2026/07/06 17:04:03.000.847,C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Project2.dproj=D:\Joemil\TestesDelphi\modernui\ModernUI_Demo.dproj</Transaction>
+    <Transaction>2026/07/06 17:03:53.000.171,D:\Joemil\TestesDelphi\modernui\Unit1.dfm=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>2026/07/06 17:03:53.000.171,D:\Joemil\TestesDelphi\modernui\Unit1.pas=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2026/07/06 17:04:03.000.847,D:\Joemil\TestesDelphi\modernui\ModernUI_Demo.dproj=C:\Users\joemi\OneDrive\Documentos\Embarcadero\Studio\Projects\Project2.dproj</Transaction>
     <Transaction>2026/07/06 17:09:38.000.113,=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas</Transaction>
     <Transaction>2026/07/06 17:17:26.000.568,=D:\Joemil\TestesDelphi\modernui\Unit2.pas</Transaction>
-    <Transaction>2026/07/06 17:17:36.000.325,D:\Joemil\TestesDelphi\modernui\Unit2.pas=D:\Joemil\TestesDelphi\modernui\ModernUI.Types.pas</Transaction>
+    <Transaction>2026/07/06 17:17:36.000.325,D:\Joemil\TestesDelphi\modernui\ModernUI.Types.pas=D:\Joemil\TestesDelphi\modernui\Unit2.pas</Transaction>
     <Transaction>2026/07/06 17:19:37.000.433,D:\Joemil\TestesDelphi\modernui\ModernUI.Types.pas=</Transaction>
+    <Transaction>2026/07/07 09:25:54.278,=D:\Joemil\TestesDelphi\modernui\ModernUI.Toast.pas</Transaction>
+    <Transaction>2026/07/07 14:38:19.938,D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.pas=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas</Transaction>
+    <Transaction>2026/07/07 14:38:23.902,D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.pas=D:\Joemil\TestesDelphi\modernui\ModernUI.Toast.pas</Transaction>
+    <Transaction>2026/07/07 14:38:43.876,=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas</Transaction>
+    <Transaction>2026/07/07 14:38:44.042,=D:\Joemil\TestesDelphi\modernui\ModernUI.Toast.Form.pas</Transaction>
+    <Transaction>2026/07/07 14:38:48.875,D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.pas=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas</Transaction>
+    <Transaction>2026/07/07 14:38:48.877,D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.dfm=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.dfm</Transaction>
+    <Transaction>2026/07/07 14:38:53.117,D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.pas=D:\Joemil\TestesDelphi\modernui\ModernUI.Toast.Form.pas</Transaction>
+    <Transaction>2026/07/07 14:38:53.117,D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.dfm=D:\Joemil\TestesDelphi\modernui\ModernUI.Toast.Form.dfm</Transaction>
   </Transactions>
 </BorlandProject>

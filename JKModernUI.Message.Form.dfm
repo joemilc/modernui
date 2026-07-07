@@ -16,6 +16,7 @@ object ModernMessageForm: TModernMessageForm
   OnPaint = FormPaint
   OnResize = FormResize
   OnShow = FormShow
+  PixelsPerInch = 96
   TextHeight = 13
   object lblTitle: TLabel
     Left = 59
@@ -23,12 +24,16 @@ object ModernMessageForm: TModernMessageForm
     Width = 35
     Height = 16
     Caption = 'Titulo'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWhite
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
+    Transparent = False
+    Layout = tlCenter
   end
   object imgIcon: TImage
     Left = 19
@@ -53,12 +58,15 @@ object ModernMessageForm: TModernMessageForm
     Width = 17
     Height = 16
     Caption = 'OK'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
+    Transparent = False
     OnClick = shpOKClick
     OnMouseEnter = shpOKMouseEnter
     OnMouseLeave = shpOKMouseLeave
@@ -79,12 +87,15 @@ object ModernMessageForm: TModernMessageForm
     Width = 50
     Height = 16
     Caption = 'Cancelar'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
+    ParentColor = False
     ParentFont = False
+    Transparent = False
     OnClick = shpCancelClick
     OnMouseEnter = shpCancelMouseEnter
     OnMouseLeave = shpCancelMouseLeave
@@ -105,12 +116,15 @@ object ModernMessageForm: TModernMessageForm
     Width = 22
     Height = 16
     Caption = 'Sim'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
+    Transparent = False
     OnClick = shpYesClick
     OnMouseEnter = shpYesMouseEnter
     OnMouseLeave = shpYesMouseLeave
@@ -131,12 +145,15 @@ object ModernMessageForm: TModernMessageForm
     Width = 22
     Height = 16
     Caption = 'N'#227'o'
+    Color = clWhite
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
+    ParentColor = False
     ParentFont = False
+    Transparent = False
     OnClick = shpNoClick
     OnMouseEnter = shpNoMouseEnter
     OnMouseLeave = shpNoMouseLeave

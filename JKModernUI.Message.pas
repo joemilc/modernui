@@ -1,4 +1,4 @@
-unit ModernUI.Message;
+unit JKModernUI.Message;
 
 interface
 
@@ -7,8 +7,6 @@ uses
   Dialogs;
 
 type
-
-
   TModernMessageType = (
     mtPrimary,
     mtSuccess,
@@ -30,20 +28,33 @@ type
     mrNo
   );
 
+  TModernToastPosition = (
+    tpCenter,
+    tpCenterTop,
+    tpCenterBottom,
+    tpLeftCenter,
+    tpLeftTop,
+    tpLeftBottom,
+    tpRight,
+    tpRightTop,
+    tpRightCenter,
+    tpRightBottom
+  );
 
-function MUMessage(
-  const ATitulo : string;
-  const ATexto  : string;
-  ATipo         : TModernMessageType = mtPrimary;
-  ABotoes       : TModernButtons = mbOK
+function JKMUMessage(
+  const ATitulo: string;
+  const ATexto: string;
+  ATipo: TModernMessageType = mtPrimary;
+  ABotoes: TModernButtons = mbOK
 ): TModernResult;
 
 implementation
 
 uses
-  ModernUI.Message.Form;
+  JKModernUI.Message.Form;
 
-function MUMessage(const ATitulo, ATexto: string; ATipo: TModernMessageType; ABotoes: TModernButtons): TModernResult;
+function JKMUMessage(const ATitulo, ATexto: string; ATipo: TModernMessageType;
+  ABotoes: TModernButtons): TModernResult;
 var
   Form: TModernMessageForm;
 begin

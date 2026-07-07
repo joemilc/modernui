@@ -1,47 +1,42 @@
 ﻿[Closed Files]
 File_0=TSourceModule,'D:\Joemil\TestesDelphi\modernui\ModernUI.Types.pas',0,1,1,1,6,0,0,,
 File_1=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uEmpresa.pas',0,1,1,1,1,0,0,,
-File_2=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\TEF\TEF.Controller.SuperTEF.pas',0,1,220,1,233,0,0,,{1
-File_3=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uDados.pas',0,1,3106,28,3121,0,0,,{1
+File_2=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\TEF\TEF.Controller.SuperTEF.pas',0,1,220,1,233,0,0,,{1,180,1}{2,345,42}{3,25,18}
+File_3=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uDados.pas',0,1,3106,28,3121,0,0,,{1,3818,1}
 File_4=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\udmMemory.pas',0,1,1,1,1,0,0,,
 File_5=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uDados2.pas',0,1,1,1,1,0,0,,
 File_6=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uMenuRiboon.pas',0,1,1986,5,1992,0,0,,
 File_7=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uPesqVendas.pas',0,1,1365,50,1483,0,0,,
 File_8=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uRel_Preview.pas',0,1,1,1,1,0,0,,
 File_9=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\Fiscal\GerarNotaSaida.pas',0,1,52,42,140,0,0,,
+File_10=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uNotaFiscal.pas',0,1,578,59,591,0,0,,
+File_11=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uFuncoes.pas',0,1,1,35,21,0,0,,
+File_12=TSourceModule,'c:\program files (x86)\embarcadero\studio\22.0\source\rtl\common\System.RegularExpressionsAPI.pas',0,1,390,1,119,0,0,,
+File_13=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\TEF\TEF.Controller.SuperTEFv2.pas',0,1,40,37,70,0,0,,
+File_14=TSourceModule,'D:\Joemil\Sistemas\_ControlFacil - XE7\ControlFacil\uPDV.pas',0,1,512,54,534,0,0,,{1
 
 [Modules]
-Module0=D:\Joemil\TestesDelphi\modernui\Unit1.pas
-Module1=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.pas
-Module2=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.pas
-Module3=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.pas
-Module4=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.pas
-Count=5
+Module0=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas
+Module1=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas
+Module2=D:\Joemil\TestesDelphi\modernui\Unit1.pas
+Count=3
 EditWindowCount=1
+
+[D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas]
+ModuleType=TSourceModule
+
+[D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas]
+ModuleType=TSourceModule
 
 [D:\Joemil\TestesDelphi\modernui\Unit1.pas]
 ModuleType=TSourceModule
 
-[D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.pas]
-ModuleType=TSourceModule
-
-[D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.pas]
-ModuleType=TSourceModule
-
-[D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.pas]
-ModuleType=TSourceModule
-
-[D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.pas]
-ModuleType=TSourceModule
-
 [EditWindow0]
-ViewCount=5
-CurrentEditView=D:\Joemil\TestesDelphi\modernui\Unit1.pas
+ViewCount=3
+CurrentEditView=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas
 View0=0
 View1=1
 View2=2
-View3=3
-View4=4
 PercentageSizes=1
 Create=1
 Visible=1
@@ -74,8 +69,8 @@ BottomMiddelPanelData=0000080001020200000009000000446F636B5369746530100000004772
 [View0]
 CustomEditViewType=TEditView
 Module=D:\Joemil\TestesDelphi\modernui\Unit1.pas
-CursorX=25
-CursorY=9
+CursorX=53
+CursorY=19
 TopLine=1
 LeftCol=1
 Elisions=
@@ -84,47 +79,25 @@ EditViewName=D:\Joemil\TestesDelphi\modernui\Unit1.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.pas
-CursorX=23
-CursorY=54
+Module=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas
+CursorX=83
+CursorY=42
+TopLine=26
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.Form.pas
+
+[View2]
+CustomEditViewType=TEditView
+Module=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas
+CursorX=10
+CursorY=52
 TopLine=29
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.pas
-
-[View2]
-CustomEditViewType=TEditView
-Module=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.pas
-CursorX=40
-CursorY=20
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.Form.pas
-
-[View3]
-CustomEditViewType=TEditView
-Module=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.pas
-CursorX=14
-CursorY=8
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=D:\Joemil\TestesDelphi\modernui\JKModernUI.Toast.pas
-
-[View4]
-CustomEditViewType=TEditView
-Module=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.pas
-CursorX=5
-CursorY=8
-TopLine=1
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=D:\Joemil\TestesDelphi\modernui\JKModernUI.Message.Form.pas
+EditViewName=D:\Joemil\TestesDelphi\modernui\ModernUI.Message.pas
 
 [Watches]
 Count=0
@@ -264,8 +237,8 @@ SplitPos=111
 
 [PropInspDesignerSelection]
 ArrangeBy=Name
-SelectedItem=Caption,
-ExpandedItems=Anchors=0,BorderIcons=0,Constraints=0,Font=1,LiveBindings=0,"LiveBindings Designer=0",Margins=0,StyleElements=0,Touch=0,Font.Style=0,CustomTitleBar=0
+SelectedItem=,
+ExpandedItems=GlassFrame=0,HorzScrollBar=0,"LiveBindings Designer=0",Margins=0,Anchors=0,BorderIcons=0,Constraints=0,CustomTitleBar=0,Font=0,LiveBindings=0,Padding=0,StyleElements=0,Touch=0,VertScrollBar=0
 
 [frmDesignPreview]
 PercentageSizes=1
