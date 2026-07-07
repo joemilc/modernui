@@ -8,31 +8,46 @@ uses
   ModernUI.Message;
 
 const
-  WS_EX_LAYERED = $80000;
-  LWA_COLORKEY = 1;
-  LWA_ALPHA = 2;
+  CORNER_RADIUS = 25;
+  BORDER_SIZE = 3;
+  // Bootstrap colors
+  BS_DANGER  = $004535dc;  // #dc3545
 
 type
   TModernMessageForm = class(TForm)
-    pnlHeader: TPanel;
     lblTitle: TLabel;
-    pnlBody: TPanel;
+    imgIcon: TImage;
     scrBody: TScrollBox;
     lblText: TLabel;
-    pnlButtons: TPanel;
-    btnOK: TButton;
-    btnCancel: TButton;
-    btnYes: TButton;
-    btnNo: TButton;
-    imgIcon: TImage;
+    shpOK: TShape;
+    lblOK: TLabel;
+    shpCancel: TShape;
+    lblCancel: TLabel;
+    shpYes: TShape;
+    lblYes: TLabel;
+    shpNo: TShape;
+    lblNo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnOKClick(Sender: TObject);
-    procedure btnCancelClick(Sender: TObject);
-    procedure btnYesClick(Sender: TObject);
-    procedure btnNoClick(Sender: TObject);
+    procedure shpOKClick(Sender: TObject);
+    procedure shpCancelClick(Sender: TObject);
+    procedure shpYesClick(Sender: TObject);
+    procedure shpNoClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormPaint(Sender: TObject);
+    procedure FormResize(Sender: TObject);
+    procedure shpOKMouseEnter(Sender: TObject);
+    procedure shpOKMouseLeave(Sender: TObject);
+    procedure shpCancelMouseEnter(Sender: TObject);
+    procedure shpCancelMouseLeave(Sender: TObject);
+    procedure shpYesMouseEnter(Sender: TObject);
+    procedure shpYesMouseLeave(Sender: TObject);
+    procedure shpNoMouseEnter(Sender: TObject);
+    procedure shpNoMouseLeave(Sender: TObject);
+    procedure shpOKMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure shpCancelMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure shpYesMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure shpNoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   private
     FTitulo: string;
     FTexto: string;
@@ -42,8 +57,10 @@ type
     procedure AplicarCores;
     procedure AjustarLayout;
     procedure AjustarTamanho;
-    procedure AplicarCantosArredondados;
     procedure AplicarIcone;
+    procedure AjustarControles;
+    procedure AplicarCantosArredondados;
+    function GetBorderColor: TColor;
   public
     procedure Configurar(const ATitulo, ATexto: string; ATipo: TModernMessageType; ABotoes: TModernButtons);
     function Mostrar: TModernResult;
@@ -54,49 +71,149 @@ implementation
 {$R *.dfm}
 
 procedure TModernMessageForm.FormCreate(Sender: TObject);
+var
+  CorBorda: TColor;
 begin
   BorderStyle := bsNone;
-  Color := clFuchsia; // Usamos uma cor magenta como chave de transparência
+  Color := clWhite;
   Position := poScreenCenter;
   DoubleBuffered := True;
   
-  // Configuramos a janela como layered e definimos a cor de transparência
-  SetWindowLong(Handle, GWL_EXSTYLE, GetWindowLong(Handle, GWL_EXSTYLE) or WS_EX_LAYERED);
-  SetLayeredWindowAttributes(Handle, Color, 255, LWA_COLORKEY);
+  // Set scrollbox color to white
+  scrBody.Color := clWhite;
+
+  CorBorda := GetBorderColor;
+
+  // Set OK button (follows form border color)
+  shpOK.Pen.Color := CorBorda;
+  shpOK.Brush.Color := clWhite;
+  shpOK.Cursor := crHandPoint;
+  lblOK.Font.Color := CorBorda;
+  lblOK.Font.Style := [fsBold];
+  lblOK.Cursor := crHandPoint;
+
+  // Set Cancel button (always Danger)
+  shpCancel.Pen.Color := BS_DANGER;
+  shpCancel.Brush.Color := clWhite;
+  shpCancel.Cursor := crHandPoint;
+  lblCancel.Font.Color := BS_DANGER;
+  lblCancel.Font.Style := [];
+  lblCancel.Cursor := crHandPoint;
+
+  // Set Yes button (follows form border color)
+  shpYes.Pen.Color := CorBorda;
+  shpYes.Brush.Color := clWhite;
+  shpYes.Cursor := crHandPoint;
+  lblYes.Font.Color := CorBorda;
+  lblYes.Font.Style := [fsBold];
+  lblYes.Cursor := crHandPoint;
+
+  // Set No button (always Danger)
+  shpNo.Pen.Color := BS_DANGER;
+  shpNo.Brush.Color := clWhite;
+  shpNo.Cursor := crHandPoint;
+  lblNo.Font.Color := BS_DANGER;
+  lblNo.Font.Style := [];
+  lblNo.Cursor := crHandPoint;
 end;
 
 procedure TModernMessageForm.FormPaint(Sender: TObject);
 var
   CorBorda: TColor;
+  R: TRect;
 begin
-  // Primeiro, definimos a cor da borda
-  case FTipo of
-    mtPrimary: CorBorda := $007B2423;
-    mtSuccess: CorBorda := $003C7634;
-    mtWarning: CorBorda := $00138ED9;
-    mtDanger: CorBorda := $002328D9;
-    mtInfo: CorBorda := $00856404;
-  end;
-  
-  // Primeiro limpamos todo o fundo com a cor de transparência
-  Canvas.Brush.Color := Color;
-  Canvas.FillRect(Rect(0, 0, Width, Height));
-  
-  // Depois desenhamos o fundo branco com cantos arredondados
+  CorBorda := GetBorderColor;
+
+  // Draw the outer rounded rectangle (border color)
+  Canvas.Brush.Color := CorBorda;
+  Canvas.Pen.Color := CorBorda;
+  Canvas.Pen.Width := 1;
+  Canvas.RoundRect(0, 0, Width, Height, CORNER_RADIUS, CORNER_RADIUS);
+
+  // Draw the inner white area
   Canvas.Brush.Color := clWhite;
   Canvas.Pen.Color := clWhite;
-  Canvas.RoundRect(0, 0, Width, Height, 10, 10);
-  
-  // Depois desenhamos a borda colorida com cantos arredondados
+  Canvas.RoundRect(BORDER_SIZE, BORDER_SIZE, Width - BORDER_SIZE, Height - BORDER_SIZE, CORNER_RADIUS - BORDER_SIZE, CORNER_RADIUS - BORDER_SIZE);
+
+  // Draw the header with the border color
+  R.Left := BORDER_SIZE;
+  R.Top := BORDER_SIZE;
+  R.Right := Width - BORDER_SIZE;
+  R.Bottom := BORDER_SIZE + 60;
+
+  Canvas.Brush.Color := CorBorda;
   Canvas.Pen.Color := CorBorda;
-  Canvas.Pen.Width := 2;
-  Canvas.Brush.Style := bsClear;
-  Canvas.RoundRect(1, 1, Width - 1, Height - 1, 10, 10);
+
+  // Draw top part of header (flat since it's at the top)
+  Canvas.Rectangle(R.Left, R.Top, R.Right, R.Bottom);
+
+  // Round the top-left and top-right corners of the header
+  Canvas.Pen.Color := CorBorda;
+  Canvas.Brush.Color := CorBorda;
+  Canvas.Ellipse(R.Left, R.Top, R.Left + CORNER_RADIUS * 2, R.Top + CORNER_RADIUS * 2);
+  Canvas.Ellipse(R.Right - CORNER_RADIUS * 2, R.Top, R.Right, R.Top + CORNER_RADIUS * 2);
+end;
+
+procedure TModernMessageForm.FormResize(Sender: TObject);
+begin
+  AplicarCantosArredondados;
+  AjustarControles;
+  Invalidate;
 end;
 
 procedure TModernMessageForm.AplicarCantosArredondados;
+var
+  Rgn: HRGN;
 begin
-  // A função foi movida para o evento OnPaint
+  Rgn := CreateRoundRectRgn(0, 0, Width, Height, CORNER_RADIUS, CORNER_RADIUS);
+  SetWindowRgn(Handle, Rgn, True);
+end;
+
+procedure TModernMessageForm.AjustarControles;
+var
+  ContentRect: TRect;
+begin
+  ContentRect.Left := BORDER_SIZE;
+  ContentRect.Top := BORDER_SIZE;
+  ContentRect.Right := Width - BORDER_SIZE;
+  ContentRect.Bottom := Height - BORDER_SIZE;
+
+  // Position header controls
+  imgIcon.Left := ContentRect.Left + 16;
+  imgIcon.Top := ContentRect.Top + 16;
+
+  lblTitle.Left := ContentRect.Left + 56;
+  lblTitle.Top := ContentRect.Top + 20;
+
+  // Position scroll box
+  scrBody.Left := ContentRect.Left;
+  scrBody.Top := ContentRect.Top + 60;
+  scrBody.Width := ContentRect.Right - ContentRect.Left;
+  scrBody.Height := (ContentRect.Bottom - 50) - (ContentRect.Top + 60);
+
+  // Position OK button
+  shpOK.Left := ContentRect.Right - 83;
+  shpOK.Top := ContentRect.Bottom - 40;
+  lblOK.Left := shpOK.Left + (shpOK.Width - lblOK.Width) div 2;
+  lblOK.Top := shpOK.Top + (shpOK.Height - lblOK.Height) div 2;
+
+  // Position Cancel button
+  shpCancel.Left := ContentRect.Right - 83 - 82;
+  shpCancel.Top := ContentRect.Bottom - 40;
+  lblCancel.Left := shpCancel.Left + (shpCancel.Width - lblCancel.Width) div 2;
+  lblCancel.Top := shpCancel.Top + (shpCancel.Height - lblCancel.Height) div 2;
+
+  // Position Yes button
+  shpYes.Left := ContentRect.Right - 83;
+  shpYes.Top := ContentRect.Bottom - 40;
+  lblYes.Left := shpYes.Left + (shpYes.Width - lblYes.Width) div 2;
+  lblYes.Top := shpYes.Top + (shpYes.Height - lblYes.Height) div 2;
+
+  // Position No button
+  shpNo.Left := ContentRect.Right - 83 - 82;
+  shpNo.Top := ContentRect.Bottom - 40;
+  lblNo.Left := shpNo.Left + (shpNo.Width - lblNo.Width) div 2;
+  lblNo.Top := shpNo.Top + (shpNo.Height - lblNo.Height) div 2;
 end;
 
 procedure TModernMessageForm.AplicarIcone;
@@ -145,7 +262,7 @@ begin
     Bmp.Width := 32;
     Bmp.Height := 32;
     Bmp.PixelFormat := pf32bit;
-    Bmp.Canvas.Brush.Color := Color;
+    Bmp.Canvas.Brush.Color := GetBorderColor;
     Bmp.Canvas.FillRect(Rect(0, 0, 32, 32));
 
     Bmp.Canvas.Brush.Color := CorFundo;
@@ -155,7 +272,7 @@ begin
     Y := 16;
     Bmp.Canvas.Ellipse(X - Radius, Y - Radius, X + Radius, Y + Radius);
 
-    Bmp.Canvas.Font.Name := 'Arial';
+    Bmp.Canvas.Font.Name := 'Tahoma';
     Bmp.Canvas.Font.Size := 16;
     Bmp.Canvas.Font.Color := CorTexto;
     Bmp.Canvas.Font.Style := [fsBold];
@@ -171,6 +288,9 @@ procedure TModernMessageForm.FormShow(Sender: TObject);
 begin
   AjustarTamanho;
   AjustarLayout;
+  AjustarControles;
+  AplicarCantosArredondados;
+  Invalidate;
 end;
 
 procedure TModernMessageForm.Configurar(const ATitulo, ATexto: string; ATipo: TModernMessageType; ABotoes: TModernButtons);
@@ -189,6 +309,8 @@ begin
   AjustarTamanho;
   AjustarLayout;
   AplicarIcone;
+  AjustarControles;
+  AplicarCantosArredondados;
   Invalidate;
   ShowModal;
   Result := FResultado;
@@ -196,28 +318,58 @@ end;
 
 procedure TModernMessageForm.AplicarCores;
 var
-  CorHeader: TColor;
+  CorBorda: TColor;
+begin
+  CorBorda := GetBorderColor;
+
+  // OK button follows form color
+  shpOK.Pen.Color := CorBorda;
+  lblOK.Font.Color := CorBorda;
+
+  // Cancel button always Danger
+  shpCancel.Pen.Color := BS_DANGER;
+  lblCancel.Font.Color := BS_DANGER;
+
+  // Yes button follows form color
+  shpYes.Pen.Color := CorBorda;
+  lblYes.Font.Color := CorBorda;
+
+  // No button always Danger
+  shpNo.Pen.Color := BS_DANGER;
+  lblNo.Font.Color := BS_DANGER;
+
+  Invalidate; // Force repaint
+end;
+
+function TModernMessageForm.GetBorderColor: TColor;
 begin
   case FTipo of
-    mtPrimary: CorHeader := $007B2423;
-    mtSuccess: CorHeader := $003C7634;
-    mtWarning: CorHeader := $00138ED9;
-    mtDanger: CorHeader := $002328D9;
-    mtInfo: CorHeader := $00856404;
+    mtPrimary: Result := $007B2423;
+    mtSuccess: Result := $003C7634;
+    mtWarning: Result := $00138ED9;
+    mtDanger: Result := $002328D9;
+    mtInfo: Result := $00856404;
+    else Result := $007B2423;
   end;
-  pnlHeader.Color := CorHeader;
 end;
 
 procedure TModernMessageForm.AjustarLayout;
 var
   LarguraTextoDisponivel: Integer;
 begin
-  btnOK.Visible := FBotoes in [mbOK, mbOKCancel];
-  btnCancel.Visible := FBotoes in [mbOKCancel];
-  btnYes.Visible := FBotoes in [mbYesNo];
-  btnNo.Visible := FBotoes in [mbYesNo];
+  shpOK.Visible := FBotoes in [mbOK, mbOKCancel];
+  lblOK.Visible := FBotoes in [mbOK, mbOKCancel];
 
-  LarguraTextoDisponivel := ClientWidth - 32;
+  shpCancel.Visible := FBotoes in [mbOKCancel];
+  lblCancel.Visible := FBotoes in [mbOKCancel];
+
+  shpYes.Visible := FBotoes in [mbYesNo];
+  lblYes.Visible := FBotoes in [mbYesNo];
+
+  shpNo.Visible := FBotoes in [mbYesNo];
+  lblNo.Visible := FBotoes in [mbYesNo];
+
+  LarguraTextoDisponivel := scrBody.ClientWidth - 32;
   lblText.Left := 16;
   lblText.Top := 16;
   lblText.Width := LarguraTextoDisponivel;
@@ -241,64 +393,132 @@ begin
   Canvas.Font := lblText.Font;
   RectTexto.Left := 0;
   RectTexto.Top := 0;
-  RectTexto.Right := LarguraFinal - 32;
+  RectTexto.Right := LarguraFinal - 32 - (BORDER_SIZE * 2);
   RectTexto.Bottom := 0;
   DrawText(Canvas.Handle, PChar(FTexto), -1, RectTexto, DT_CALCRECT or DT_WORDBREAK or DT_LEFT or DT_TOP);
   AlturaTexto := RectTexto.Bottom - RectTexto.Top;
 
   lblText.Height := AlturaTexto;
 
-  AlturaFinal := 60 + (AlturaTexto + 32) + 50;
+  AlturaFinal := 60 + (AlturaTexto + 32) + 50 + (BORDER_SIZE * 2);
 
   if AlturaFinal < AlturaMinima then AlturaFinal := AlturaMinima;
   if AlturaFinal > AlturaMaxima then AlturaFinal := AlturaMaxima;
 
-  Width := LarguraFinal;
+  Width := LarguraFinal + (BORDER_SIZE * 2);
   Height := AlturaFinal;
 end;
 
-procedure TModernMessageForm.btnOKClick(Sender: TObject);
+procedure TModernMessageForm.shpOKClick(Sender: TObject);
 begin
   FResultado := mrOK;
   Close;
 end;
 
-procedure TModernMessageForm.btnCancelClick(Sender: TObject);
+procedure TModernMessageForm.shpOKMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  shpOKClick(Sender);
+end;
+
+procedure TModernMessageForm.shpCancelClick(Sender: TObject);
 begin
   FResultado := mrCancel;
   Close;
 end;
 
-procedure TModernMessageForm.btnYesClick(Sender: TObject);
+procedure TModernMessageForm.shpCancelMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  shpCancelClick(Sender);
+end;
+
+procedure TModernMessageForm.shpYesClick(Sender: TObject);
 begin
   FResultado := mrYes;
   Close;
 end;
 
-procedure TModernMessageForm.btnNoClick(Sender: TObject);
+procedure TModernMessageForm.shpYesMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  shpYesClick(Sender);
+end;
+
+procedure TModernMessageForm.shpNoClick(Sender: TObject);
 begin
   FResultado := mrNo;
   Close;
+end;
+
+procedure TModernMessageForm.shpNoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  shpNoClick(Sender);
 end;
 
 procedure TModernMessageForm.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
   begin
-    if btnCancel.Visible then
-      btnCancel.Click
-    else if btnNo.Visible then
-      btnNo.Click
-    else if btnOK.Visible then
-      btnOK.Click;
+    if shpCancel.Visible then
+      shpCancelClick(Self)
+    else if shpNo.Visible then
+      shpNoClick(Self)
+    else if shpOK.Visible then
+      shpOKClick(Self);
   end
   else if Key = VK_RETURN then
   begin
-    if btnOK.Visible then
-      btnOK.Click
-    else if btnYes.Visible then
-      btnYes.Click;
+    if shpOK.Visible then
+      shpOKClick(Self)
+    else if shpYes.Visible then
+      shpYesClick(Self);
   end;
+end;
+
+procedure TModernMessageForm.shpOKMouseEnter(Sender: TObject);
+begin
+  shpOK.Brush.Color := GetBorderColor;
+  lblOK.Font.Color := clWhite;
+end;
+
+procedure TModernMessageForm.shpOKMouseLeave(Sender: TObject);
+begin
+  shpOK.Brush.Color := clWhite;
+  lblOK.Font.Color := GetBorderColor;
+end;
+
+procedure TModernMessageForm.shpCancelMouseEnter(Sender: TObject);
+begin
+  shpCancel.Brush.Color := BS_DANGER;
+  lblCancel.Font.Color := clWhite;
+end;
+
+procedure TModernMessageForm.shpCancelMouseLeave(Sender: TObject);
+begin
+  shpCancel.Brush.Color := clWhite;
+  lblCancel.Font.Color := BS_DANGER;
+end;
+
+procedure TModernMessageForm.shpYesMouseEnter(Sender: TObject);
+begin
+  shpYes.Brush.Color := GetBorderColor;
+  lblYes.Font.Color := clWhite;
+end;
+
+procedure TModernMessageForm.shpYesMouseLeave(Sender: TObject);
+begin
+  shpYes.Brush.Color := clWhite;
+  lblYes.Font.Color := GetBorderColor;
+end;
+
+procedure TModernMessageForm.shpNoMouseEnter(Sender: TObject);
+begin
+  shpNo.Brush.Color := BS_DANGER;
+  lblNo.Font.Color := clWhite;
+end;
+
+procedure TModernMessageForm.shpNoMouseLeave(Sender: TObject);
+begin
+  shpNo.Brush.Color := clWhite;
+  lblNo.Font.Color := BS_DANGER;
 end;
 
 end.

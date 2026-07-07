@@ -14,111 +14,147 @@ object ModernMessageForm: TModernMessageForm
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnPaint = FormPaint
+  OnResize = FormResize
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
-  object pnlHeader: TPanel
-    Left = 0
-    Top = 0
-    Width = 400
-    Height = 60
-    Align = alTop
-    BevelOuter = bvNone
-    Color = 8070179
-    ParentBackground = False
+  object lblTitle: TLabel
+    Left = 59
+    Top = 23
+    Width = 35
+    Height = 16
+    Caption = 'Titulo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object imgIcon: TImage
+    Left = 19
+    Top = 19
+    Width = 32
+    Height = 32
+    Transparent = True
+  end
+  object shpOK: TShape
+    Left = 307
+    Top = 153
+    Width = 75
+    Height = 30
+    Shape = stRoundRect
+    OnMouseDown = shpOKMouseDown
+    OnMouseEnter = shpOKMouseEnter
+    OnMouseLeave = shpOKMouseLeave
+  end
+  object lblOK: TLabel
+    Left = 307
+    Top = 158
+    Width = 17
+    Height = 16
+    Caption = 'OK'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = shpOKClick
+    OnMouseEnter = shpOKMouseEnter
+    OnMouseLeave = shpOKMouseLeave
+  end
+  object shpCancel: TShape
+    Left = 226
+    Top = 153
+    Width = 75
+    Height = 30
+    Shape = stRoundRect
+    OnMouseDown = shpCancelMouseDown
+    OnMouseEnter = shpCancelMouseEnter
+    OnMouseLeave = shpCancelMouseLeave
+  end
+  object lblCancel: TLabel
+    Left = 240
+    Top = 158
+    Width = 50
+    Height = 16
+    Caption = 'Cancelar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    OnClick = shpCancelClick
+    OnMouseEnter = shpCancelMouseEnter
+    OnMouseLeave = shpCancelMouseLeave
+  end
+  object shpYes: TShape
+    Left = 307
+    Top = 153
+    Width = 75
+    Height = 30
+    Shape = stRoundRect
+    OnMouseDown = shpYesMouseDown
+    OnMouseEnter = shpYesMouseEnter
+    OnMouseLeave = shpYesMouseLeave
+  end
+  object lblYes: TLabel
+    Left = 331
+    Top = 158
+    Width = 22
+    Height = 16
+    Caption = 'Sim'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = shpYesClick
+    OnMouseEnter = shpYesMouseEnter
+    OnMouseLeave = shpYesMouseLeave
+  end
+  object shpNo: TShape
+    Left = 226
+    Top = 153
+    Width = 75
+    Height = 30
+    Shape = stRoundRect
+    OnMouseDown = shpNoMouseDown
+    OnMouseEnter = shpNoMouseEnter
+    OnMouseLeave = shpNoMouseLeave
+  end
+  object lblNo: TLabel
+    Left = 253
+    Top = 158
+    Width = 22
+    Height = 16
+    Caption = 'N'#227'o'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    OnClick = shpNoClick
+    OnMouseEnter = shpNoMouseEnter
+    OnMouseLeave = shpNoMouseLeave
+  end
+  object scrBody: TScrollBox
+    Left = 6
+    Top = 66
+    Width = 388
+    Height = 81
+    BorderStyle = bsNone
     TabOrder = 0
-    object imgIcon: TImage
-      Left = 16
-      Top = 16
-      Width = 32
-      Height = 32
-      Transparent = True
-    end
-    object lblTitle: TLabel
-      Left = 56
-      Top = 20
-      Width = 35
-      Height = 16
-      Caption = 'Titulo'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -13
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-    end
-  end
-  object pnlBody: TPanel
-    Left = 0
-    Top = 60
-    Width = 400
-    Height = 90
-    Align = alClient
-    BevelOuter = bvNone
-    ParentBackground = False
-    TabOrder = 1
-    object scrBody: TScrollBox
-      Left = 0
-      Top = 0
-      Width = 400
-      Height = 90
-      Align = alClient
-      BorderStyle = bsNone
-      TabOrder = 0
-      object lblText: TLabel
-        Left = 16
-        Top = 16
-        Width = 97
-        Height = 13
-        Caption = 'Texto da mensagem'
-        WordWrap = True
-      end
-    end
-  end
-  object pnlButtons: TPanel
-    Left = 0
-    Top = 150
-    Width = 400
-    Height = 50
-    Align = alBottom
-    BevelOuter = bvNone
-    ParentBackground = False
-    TabOrder = 2
-    object btnOK: TButton
-      Left = 304
-      Top = 10
-      Width = 75
-      Height = 30
-      Caption = 'OK'
-      TabOrder = 0
-      OnClick = btnOKClick
-    end
-    object btnCancel: TButton
-      Left = 223
-      Top = 10
-      Width = 75
-      Height = 30
-      Caption = 'Cancelar'
-      TabOrder = 1
-      OnClick = btnCancelClick
-    end
-    object btnYes: TButton
-      Left = 304
-      Top = 10
-      Width = 75
-      Height = 30
-      Caption = 'Sim'
-      TabOrder = 2
-      OnClick = btnYesClick
-    end
-    object btnNo: TButton
-      Left = 223
-      Top = 10
-      Width = 75
-      Height = 30
-      Caption = 'N'#195#163'o'
-      TabOrder = 3
-      OnClick = btnNoClick
+    object lblText: TLabel
+      Left = 13
+      Top = 13
+      Width = 97
+      Height = 13
+      Caption = 'Texto da mensagem'
+      WordWrap = True
     end
   end
 end

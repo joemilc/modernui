@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages,
   System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  ModernUI.Message;
+  ModernUI.Message, Vcl.ExtCtrls;
 
 type
   TForm1 = class(TForm)
