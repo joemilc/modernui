@@ -1,12 +1,12 @@
-# ModernUI
+# JKModernUI
 
-> Biblioteca de interface gráfica moderna para Delphi e Lazarus/FPC.
+> Biblioteca de interface moderna para Delphi com mensagens estilizadas e notificações toast.
 
 ---
 
 # Objetivo
 
-Desenvolver uma MessageBox moderna para substituir o `MessageDlg` padrão da VCL/LCL.
+Desenvolver uma biblioteca visual para substituir os diálogos tradicionais da VCL por componentes com aparência moderna, API simples e uso direto em projetos Delphi.
 
 ## Objetivos
 
@@ -15,19 +15,26 @@ Desenvolver uma MessageBox moderna para substituir o `MessageDlg` padrão da VCL
 - API simples
 - Sem dependências de terceiros
 - Compatível com Delphi
-- Preparar o código para futura compatibilidade com Lazarus/FPC
+- Estrutura organizada para evolução futura
 
 ---
 
 # Estrutura do Projeto
 
-```
-ModernUI
+```text
+JKModernUI
 │
-├── ModernUI.Message.pas
-├── ModernUI.Message.Form.pas
-├── ModernUI.Message.Form.dfm
-└── ModernUI.md
+├── JKModernUI.Message.pas
+├── JKModernUI.Message.Form.pas
+├── JKModernUI.Message.Form.dfm
+├── JKModernUI.Toast.pas
+├── JKModernUI.Toast.Form.pas
+├── JKModernUI.Toast.Form.dfm
+├── JKModernUI.Colors.pas
+├── JKModernUI.Icons.pas
+├── assets/icons/
+├── README.md
+└── jkmodernui.md
 ```
 
 ---
@@ -37,32 +44,53 @@ ModernUI
 ```delphi
 type
   TModernMessageType = (
-    mtPrimary,
-    mtSuccess,
-    mtWarning,
-    mtDanger,
-    mtInfo
+    jk_mtPrimary,
+    jk_mtSuccess,
+    jk_mtWarning,
+    jk_mtDanger,
+    jk_mtInfo
   );
 
   TModernButtons = (
-    mbOK,
-    mbOKCancel,
-    mbYesNo
+    jk_mbOK,
+    jk_mbOKCancel,
+    jk_mbYesNo
   );
 
   TModernResult = (
-    mrOK,
-    mrCancel,
-    mrYes,
-    mrNo
+    jk_mrOK,
+    jk_mrCancel,
+    jk_mrYes,
+    jk_mrNo
   );
 
-function MUMessage(
-  const ATitulo : string;
-  const ATexto  : string;
-  ATipo         : TModernMessageType = mtPrimary;
-  ABotoes       : TModernButtons = mbOK
+  TModernToastPosition = (
+    jk_tpCenter,
+    jk_tpCenterTop,
+    jk_tpCenterBottom,
+    jk_tpLeftCenter,
+    jk_tpLeftTop,
+    jk_tpLeftBottom,
+    jk_tpRight,
+    jk_tpRightTop,
+    jk_tpRightCenter,
+    jk_tpRightBottom
+  );
+
+function JKMUMessage(
+  const ATitulo: string;
+  const ATexto: string;
+  ATipo: TModernMessageType = jk_mtPrimary;
+  ABotoes: TModernButtons = jk_mbOK
 ): TModernResult;
+
+procedure JKMUToast(
+  const ATitulo: string;
+  const ATexto: string;
+  ATipo: TModernMessageType = jk_mtPrimary;
+  ADuracaoMs: Integer = 4000;
+  APosicao: TModernToastPosition = jk_tpRightTop
+);
 ```
 
 ---
@@ -71,9 +99,14 @@ function MUMessage(
 
 ## Estrutura
 
-- [x] Criar `ModernUI.Message.pas`
-- [x] Criar `ModernUI.Message.Form.pas`
-- [x] Criar `ModernUI.Message.Form.dfm`
+- [x] Criar `JKModernUI.Message.pas`
+- [x] Criar `JKModernUI.Message.Form.pas`
+- [x] Criar `JKModernUI.Message.Form.dfm`
+- [x] Criar `JKModernUI.Toast.pas`
+- [x] Criar `JKModernUI.Toast.Form.pas`
+- [x] Criar `JKModernUI.Toast.Form.dfm`
+- [x] Criar `JKModernUI.Colors.pas`
+- [x] Criar `JKModernUI.Icons.pas`
 
 ---
 
@@ -99,6 +132,7 @@ function MUMessage(
 - [x] Espaçamento automático
 - [x] Ajustar largura automaticamente
 - [x] Ajustar altura automaticamente
+- [x] Labels sincronizados com o fundo dos botões
 
 ---
 
@@ -128,6 +162,19 @@ function MUMessage(
 - [x] Retornar `TModernResult`
 - [x] Suporte aos tipos de botões
 - [x] Configurar cores conforme `TModernMessageType`
+- [x] Prefixar enums com `jk_` para evitar conflito com Delphi
+
+---
+
+## Toasts
+
+- [x] Criar API pública para toast
+- [x] Criar form não modal para toast
+- [x] Fechamento automático por timer
+- [x] Cantos arredondados com transparência real
+- [x] Empilhamento automático
+- [x] Suporte a múltiplas posições na tela
+- [x] Fundo em tom suave com borda forte no padrão Bootstrap
 
 ---
 
@@ -142,7 +189,7 @@ function MUMessage(
 
 ## Nome
 
-**ModernUI**
+**JKModernUI**
 
 ## Filosofia
 
@@ -151,6 +198,8 @@ function MUMessage(
 - Sem bibliotecas externas
 - Fácil reutilização
 - Separação entre API e interface
+- Prefixo `JK` para padronização pessoal dos componentes
+- Prefixo `jk_` nos valores de enums para evitar colisão com `Dialogs`
 
 ---
 
@@ -159,4 +208,7 @@ function MUMessage(
 ## v0.1
 
 - Criação da estrutura do projeto.
-- Desenvolvimento da Modern MessageBox.
+- Desenvolvimento da MessageBox moderna.
+- Desenvolvimento do sistema de Toast.
+- Renomeação da biblioteca para `JKModernUI`.
+- Ajuste da API pública com prefixo `jk_`.

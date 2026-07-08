@@ -16,8 +16,10 @@ type
     tmrClose: TTimer;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure HeaderMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure tmrCloseTimer(Sender: TObject);
   private
     FTitulo: string;
@@ -25,6 +27,7 @@ type
     FTipo: TModernMessageType;
     FDuracaoMs: Integer;
     FPosicao: TModernToastPosition;
+    procedure IniciarArrasteJanela;
     procedure AjustarLayout;
     procedure AjustarTamanho;
     procedure AplicarCantosArredondados;
@@ -73,11 +76,11 @@ end;
 function GetToastLeft(const AWorkArea: TRect; AToast: TModernToastForm): Integer;
 begin
   case AToast.FPosicao of
-    tpLeftCenter, tpLeftTop, tpLeftBottom:
+    jk_tpLeftCenter, jk_tpLeftTop, jk_tpLeftBottom:
       Result := AWorkArea.Left + TOAST_MARGIN;
-    tpCenter, tpCenterTop, tpCenterBottom:
+    jk_tpCenter, jk_tpCenterTop, jk_tpCenterBottom:
       Result := AWorkArea.Left + ((AWorkArea.Right - AWorkArea.Left - AToast.Width) div 2);
-    tpRight, tpRightTop, tpRightCenter, tpRightBottom:
+    jk_tpRight, jk_tpRightTop, jk_tpRightCenter, jk_tpRightBottom:
       Result := AWorkArea.Right - AToast.Width - TOAST_MARGIN;
   else
     Result := AWorkArea.Right - AToast.Width - TOAST_MARGIN;
@@ -116,11 +119,11 @@ begin
   Inc(TotalHeight, TOAST_GAP * (GroupCount - 1));
 
   case APosicao of
-    tpCenterTop, tpLeftTop, tpRight, tpRightTop:
+    jk_tpCenterTop, jk_tpLeftTop, jk_tpRight, jk_tpRightTop:
       TopPos := WorkArea.Top + TOAST_MARGIN;
-    tpCenterBottom, tpLeftBottom, tpRightBottom:
+    jk_tpCenterBottom, jk_tpLeftBottom, jk_tpRightBottom:
       TopPos := WorkArea.Bottom - TOAST_MARGIN - TotalHeight;
-    tpCenter, tpLeftCenter, tpRightCenter:
+    jk_tpCenter, jk_tpLeftCenter, jk_tpRightCenter:
       TopPos := WorkArea.Top + (((WorkArea.Bottom - WorkArea.Top) - TotalHeight) div 2);
   else
     TopPos := WorkArea.Top + TOAST_MARGIN;
@@ -143,16 +146,16 @@ begin
   if ActiveToasts = nil then
     Exit;
 
-  PositionToastGroup(tpLeftTop);
-  PositionToastGroup(tpLeftCenter);
-  PositionToastGroup(tpLeftBottom);
-  PositionToastGroup(tpCenterTop);
-  PositionToastGroup(tpCenter);
-  PositionToastGroup(tpCenterBottom);
-  PositionToastGroup(tpRight);
-  PositionToastGroup(tpRightTop);
-  PositionToastGroup(tpRightCenter);
-  PositionToastGroup(tpRightBottom);
+  PositionToastGroup(jk_tpLeftTop);
+  PositionToastGroup(jk_tpLeftCenter);
+  PositionToastGroup(jk_tpLeftBottom);
+  PositionToastGroup(jk_tpCenterTop);
+  PositionToastGroup(jk_tpCenter);
+  PositionToastGroup(jk_tpCenterBottom);
+  PositionToastGroup(jk_tpRight);
+  PositionToastGroup(jk_tpRightTop);
+  PositionToastGroup(jk_tpRightCenter);
+  PositionToastGroup(jk_tpRightBottom);
 end;
 
 procedure TModernToastForm.FormCreate(Sender: TObject);
@@ -164,9 +167,33 @@ begin
   FormStyle := fsStayOnTop;
   SetWindowLong(Handle, GWL_EXSTYLE, GetWindowLong(Handle, GWL_EXSTYLE) or WS_EX_LAYERED);
   SetLayeredWindowAttributes(Handle, ColorToRGB(clFuchsia), 0, LWA_COLORKEY);
+  shpBackground.Cursor := crSizeAll;
+  imgIcon.Cursor := crSizeAll;
+  lblTitle.Cursor := crSizeAll;
+  lblText.Cursor := crSizeAll;
 
   EnsureToastList;
   ActiveToasts.Add(Self);
+end;
+
+procedure TModernToastForm.IniciarArrasteJanela;
+begin
+  ReleaseCapture;
+  SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+end;
+
+procedure TModernToastForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if Button = mbLeft then
+    IniciarArrasteJanela;
+end;
+
+procedure TModernToastForm.HeaderMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if Button = mbLeft then
+    IniciarArrasteJanela;
 end;
 
 procedure TModernToastForm.FormShow(Sender: TObject);
@@ -357,11 +384,11 @@ end;
 function TModernToastForm.GetSymbol: string;
 begin
   case FTipo of
-    mtPrimary: Result := 'P';
-    mtSuccess: Result := 'S';
-    mtWarning: Result := '!';
-    mtDanger: Result := 'X';
-    mtInfo: Result := 'i';
+    jk_mtPrimary: Result := 'P';
+    jk_mtSuccess: Result := 'S';
+    jk_mtWarning: Result := '!';
+    jk_mtDanger: Result := 'X';
+    jk_mtInfo: Result := 'i';
   else
     Result := 'i';
   end;

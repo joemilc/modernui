@@ -13,6 +13,7 @@ object ModernMessageForm: TModernMessageForm
   Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnMouseDown = FormMouseDown
   OnPaint = FormPaint
   OnResize = FormResize
   OnShow = FormShow
@@ -34,6 +35,7 @@ object ModernMessageForm: TModernMessageForm
     ParentFont = False
     Transparent = False
     Layout = tlCenter
+    OnMouseDown = HeaderMouseDown
   end
   object imgIcon: TImage
     Left = 19
@@ -41,6 +43,7 @@ object ModernMessageForm: TModernMessageForm
     Width = 32
     Height = 32
     Transparent = True
+    OnMouseDown = HeaderMouseDown
   end
   object shpOK: TShape
     Left = 307

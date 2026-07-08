@@ -49,12 +49,15 @@ type
     procedure shpCancelMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure shpYesMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure shpNoMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure HeaderMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   private
     FTitulo: string;
     FTexto: string;
     FTipo: TModernMessageType;
     FBotoes: TModernButtons;
     FResultado: TModernResult;
+    procedure IniciarArrasteJanela;
     procedure AplicarCores;
     procedure AjustarLayout;
     procedure AjustarTamanho;
@@ -80,6 +83,8 @@ begin
   Color := clWhite;
   Position := poScreenCenter;
   DoubleBuffered := True;
+  lblTitle.Cursor := crSizeAll;
+  imgIcon.Cursor := crSizeAll;
   
   // Set scrollbox color to white
   scrBody.Color := clWhite;
@@ -125,6 +130,26 @@ begin
   lblNo.Font.Color := BS_DANGER;
   lblNo.Font.Style := [];
   lblNo.Cursor := crHandPoint;
+end;
+
+procedure TModernMessageForm.IniciarArrasteJanela;
+begin
+  ReleaseCapture;
+  SendMessage(Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+end;
+
+procedure TModernMessageForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if (Button = mbLeft) and (Y <= (BORDER_SIZE + 60)) then
+    IniciarArrasteJanela;
+end;
+
+procedure TModernMessageForm.HeaderMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if Button = mbLeft then
+    IniciarArrasteJanela;
 end;
 
 procedure TModernMessageForm.FormPaint(Sender: TObject);
@@ -247,31 +272,31 @@ begin
     Exit;
 
   case FTipo of
-    mtPrimary:
+    jk_mtPrimary:
       begin
         CorFundo := $00FFFFFF;
         CorTexto := $00000000;
         Simbolo := 'i';
       end;
-    mtSuccess:
+    jk_mtSuccess:
       begin
         CorFundo := $0000FF00;
         CorTexto := $00000000;
         Simbolo := 'ü';
       end;
-    mtWarning:
+    jk_mtWarning:
       begin
         CorFundo := $0000FFFF;
         CorTexto := $00000000;
         Simbolo := '!';
       end;
-    mtDanger:
+    jk_mtDanger:
       begin
         CorFundo := $000000FF;
         CorTexto := $00FFFFFF;
         Simbolo := '×';
       end;
-    mtInfo:
+    jk_mtInfo:
       begin
         CorFundo := $00FFFF00;
         CorTexto := $00000000;
@@ -391,17 +416,17 @@ procedure TModernMessageForm.AjustarLayout;
 var
   LarguraTextoDisponivel: Integer;
 begin
-  shpOK.Visible := FBotoes in [mbOK, mbOKCancel];
-  lblOK.Visible := FBotoes in [mbOK, mbOKCancel];
+  shpOK.Visible := FBotoes in [jk_mbOK, jk_mbOKCancel];
+  lblOK.Visible := FBotoes in [jk_mbOK, jk_mbOKCancel];
 
-  shpCancel.Visible := FBotoes in [mbOKCancel];
-  lblCancel.Visible := FBotoes in [mbOKCancel];
+  shpCancel.Visible := FBotoes in [jk_mbOKCancel];
+  lblCancel.Visible := FBotoes in [jk_mbOKCancel];
 
-  shpYes.Visible := FBotoes in [mbYesNo];
-  lblYes.Visible := FBotoes in [mbYesNo];
+  shpYes.Visible := FBotoes in [jk_mbYesNo];
+  lblYes.Visible := FBotoes in [jk_mbYesNo];
 
-  shpNo.Visible := FBotoes in [mbYesNo];
-  lblNo.Visible := FBotoes in [mbYesNo];
+  shpNo.Visible := FBotoes in [jk_mbYesNo];
+  lblNo.Visible := FBotoes in [jk_mbYesNo];
 
   LarguraTextoDisponivel := scrBody.ClientWidth - 32;
   lblText.Left := 16;
@@ -445,7 +470,7 @@ end;
 
 procedure TModernMessageForm.shpOKClick(Sender: TObject);
 begin
-  FResultado := mrOK;
+  FResultado := jk_mrOK;
   Close;
 end;
 
@@ -456,7 +481,7 @@ end;
 
 procedure TModernMessageForm.shpCancelClick(Sender: TObject);
 begin
-  FResultado := mrCancel;
+  FResultado := jk_mrCancel;
   Close;
 end;
 
@@ -467,7 +492,7 @@ end;
 
 procedure TModernMessageForm.shpYesClick(Sender: TObject);
 begin
-  FResultado := mrYes;
+  FResultado := jk_mrYes;
   Close;
 end;
 
@@ -478,7 +503,7 @@ end;
 
 procedure TModernMessageForm.shpNoClick(Sender: TObject);
 begin
-  FResultado := mrNo;
+  FResultado := jk_mrNo;
   Close;
 end;
 

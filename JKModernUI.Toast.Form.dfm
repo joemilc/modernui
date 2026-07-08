@@ -13,6 +13,7 @@ object ModernToastForm: TModernToastForm
   Font.Style = []
   OnClose = FormClose
   OnCreate = FormCreate
+  OnMouseDown = FormMouseDown
   OnResize = FormResize
   OnShow = FormShow
   TextHeight = 15
@@ -24,6 +25,7 @@ object ModernToastForm: TModernToastForm
     Align = alNone
     Pen.Width = 2
     Shape = stRoundRect
+    OnMouseDown = HeaderMouseDown
   end
   object imgIcon: TImage
     Left = 16
@@ -31,6 +33,7 @@ object ModernToastForm: TModernToastForm
     Width = 40
     Height = 40
     Transparent = True
+    OnMouseDown = HeaderMouseDown
   end
   object lblTitle: TLabel
     Left = 72
@@ -45,6 +48,7 @@ object ModernToastForm: TModernToastForm
     Font.Style = [fsBold]
     ParentFont = False
     Transparent = True
+    OnMouseDown = HeaderMouseDown
   end
   object lblText: TLabel
     Left = 72
@@ -54,6 +58,7 @@ object ModernToastForm: TModernToastForm
     Caption = 'Text'
     Transparent = True
     WordWrap = True
+    OnMouseDown = HeaderMouseDown
   end
   object tmrClose: TTimer
     Enabled = False

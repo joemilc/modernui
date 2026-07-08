@@ -8,44 +8,44 @@ uses
 
 type
   TModernMessageType = (
-    mtPrimary,
-    mtSuccess,
-    mtWarning,
-    mtDanger,
-    mtInfo
+    jk_mtPrimary,
+    jk_mtSuccess,
+    jk_mtWarning,
+    jk_mtDanger,
+    jk_mtInfo
   );
 
   TModernButtons = (
-    mbOK,
-    mbOKCancel,
-    mbYesNo
+    jk_mbOK,
+    jk_mbOKCancel,
+    jk_mbYesNo
   );
 
   TModernResult = (
-    mrOK,
-    mrCancel,
-    mrYes,
-    mrNo
+    jk_mrOK,
+    jk_mrCancel,
+    jk_mrYes,
+    jk_mrNo
   );
 
   TModernToastPosition = (
-    tpCenter,
-    tpCenterTop,
-    tpCenterBottom,
-    tpLeftCenter,
-    tpLeftTop,
-    tpLeftBottom,
-    tpRight,
-    tpRightTop,
-    tpRightCenter,
-    tpRightBottom
+    jk_tpCenter,
+    jk_tpCenterTop,
+    jk_tpCenterBottom,
+    jk_tpLeftCenter,
+    jk_tpLeftTop,
+    jk_tpLeftBottom,
+    jk_tpRight,
+    jk_tpRightTop,
+    jk_tpRightCenter,
+    jk_tpRightBottom
   );
 
 function JKMUMessage(
   const ATitulo: string;
   const ATexto: string;
-  ATipo: TModernMessageType = mtPrimary;
-  ABotoes: TModernButtons = mbOK
+  ATipo: TModernMessageType = jk_mtPrimary;
+  ABotoes: TModernButtons = jk_mbOK
 ): TModernResult;
 
 implementation

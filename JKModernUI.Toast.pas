@@ -8,9 +8,9 @@ uses
 procedure JKMUToast(
   const ATitulo: string;
   const ATexto: string;
-  ATipo: TModernMessageType = mtPrimary;
+  ATipo: TModernMessageType = jk_mtPrimary;
   ADuracaoMs: Integer = 4000;
-  APosicao: TModernToastPosition = tpRightTop
+  APosicao: TModernToastPosition = jk_tpRightTop
 );
 
 implementation

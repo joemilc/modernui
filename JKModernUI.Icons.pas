@@ -16,11 +16,11 @@ var
   IconFileName: string;
 begin
   case ATipo of
-    mtPrimary: IconFileName := 'primary.png';
-    mtSuccess: IconFileName := 'success.png';
-    mtWarning: IconFileName := 'warning.png';
-    mtDanger: IconFileName := 'danger.png';
-    mtInfo: IconFileName := 'info.png';
+    jk_mtPrimary: IconFileName := 'primary.png';
+    jk_mtSuccess: IconFileName := 'success.png';
+    jk_mtWarning: IconFileName := 'warning.png';
+    jk_mtDanger: IconFileName := 'danger.png';
+    jk_mtInfo: IconFileName := 'info.png';
   else
     IconFileName := 'info.png';
   end;
