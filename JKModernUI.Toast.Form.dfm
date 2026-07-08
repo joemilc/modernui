@@ -15,14 +15,13 @@ object ModernToastForm: TModernToastForm
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 15
   object shpBackground: TShape
     Left = 0
     Top = 0
     Width = 360
     Height = 96
-    Align = alClient
+    Align = alNone
     Pen.Width = 2
     Shape = stRoundRect
   end

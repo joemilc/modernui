@@ -71,11 +71,11 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  MUToast('Primario', 'Toast padrao no canto superior direito.', mtPrimary, 3500, tpRightTop);
-  MUToast('Sucesso', 'Toast centralizado no topo da tela.', mtSuccess, 4000, tpCenter);
-  MUToast('Aviso', 'Toast no canto inferior esquerdo.', mtWarning, 4500, tpLeftBottom);
-  MUToast('Erro', 'Toast alinhado ao centro da direita.', mtDanger, 5000, tpRightCenter);
-  MUToast('Informacao', 'Toast centralizado na parte inferior.', mtInfo, 5500, tpCenterBottom);
+  JKMUToast('Primario', 'Toast padrao no canto superior direito.', mtPrimary, 3500, tpRightTop);
+  JKMUToast('Sucesso', 'Toast centralizado no topo da tela.', mtSuccess, 4000, tpCenter);
+  JKMUToast('Aviso', 'Toast no canto inferior esquerdo.', mtWarning, 4500, tpLeftBottom);
+  JKMUToast('Erro', 'Toast alinhado ao centro da direita.', mtDanger, 5000, tpRightCenter);
+  JKMUToast('Informacao', 'Toast centralizado na parte inferior.', mtInfo, 5500, tpCenterBottom);
 end;
 
 end.

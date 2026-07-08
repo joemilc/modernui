@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, StdCtrls,
-  ExtCtrls, ModernUI.Message;
+  ExtCtrls, JKModernUI.Message, JKModernUI.Icons, JKModernUI.Colors;
 
 type
 
@@ -51,19 +51,10 @@ const
   TOAST_MAX_HEIGHT = 180;
   TOAST_MARGIN = 16;
   TOAST_GAP = 12;
+  TOAST_BORDER_WIDTH = 2;
+  TOAST_BORDER_INSET = TOAST_BORDER_WIDTH div 2;
   TOAST_RADIUS = 18;
   ICON_SIZE = 40;
-
-  BS_PRIMARY = $00D63384;
-  BS_PRIMARY_BG = $00F8D7DA;
-  BS_SUCCESS = $00198754;
-  BS_SUCCESS_BG = $00D1E7DD;
-  BS_WARNING = $00037BFF;
-  BS_WARNING_BG = $00C7EFFF;
-  BS_DANGER = $004535DC;
-  BS_DANGER_BG = $00D7DAF8;
-  BS_INFO = $00055D6F;
-  BS_INFO_BG = $00CFF4FC;
 
 var
   ActiveToasts: TList;
@@ -242,7 +233,7 @@ procedure TModernToastForm.AplicarEstilo;
 begin
   shpBackground.Brush.Color := GetBackgroundColor;
   shpBackground.Pen.Color := GetBorderColor;
-  shpBackground.Pen.Width := 2;
+  shpBackground.Pen.Width := TOAST_BORDER_WIDTH;
   shpBackground.Brush.Style := bsSolid;
 
   lblTitle.Font.Color := GetBorderColor;
@@ -282,7 +273,12 @@ var
   TextWidth: Integer;
   ContentLeft: Integer;
 begin
-  shpBackground.SetBounds(0, 0, ClientWidth, ClientHeight);
+  shpBackground.SetBounds(
+    TOAST_BORDER_INSET,
+    TOAST_BORDER_INSET,
+    ClientWidth - (TOAST_BORDER_INSET * 2),
+    ClientHeight - (TOAST_BORDER_INSET * 2)
+  );
 
   imgIcon.SetBounds(16, 16, ICON_SIZE, ICON_SIZE);
 
@@ -315,6 +311,9 @@ var
   SymbolRect: TRect;
   SymbolText: string;
 begin
+  if TryLoadModernIcon(imgIcon, FTipo) then
+    Exit;
+
   Bmp := TBitmap.Create;
   try
     Bmp.SetSize(ICON_SIZE, ICON_SIZE);
@@ -347,28 +346,12 @@ end;
 
 function TModernToastForm.GetBackgroundColor: TColor;
 begin
-  case FTipo of
-    mtPrimary: Result := BS_PRIMARY_BG;
-    mtSuccess: Result := BS_SUCCESS_BG;
-    mtWarning: Result := BS_WARNING_BG;
-    mtDanger: Result := BS_DANGER_BG;
-    mtInfo: Result := BS_INFO_BG;
-  else
-    Result := BS_PRIMARY_BG;
-  end;
+  Result := GetModernLightColor(FTipo);
 end;
 
 function TModernToastForm.GetBorderColor: TColor;
 begin
-  case FTipo of
-    mtPrimary: Result := BS_PRIMARY;
-    mtSuccess: Result := BS_SUCCESS;
-    mtWarning: Result := BS_WARNING;
-    mtDanger: Result := BS_DANGER;
-    mtInfo: Result := BS_INFO;
-  else
-    Result := BS_PRIMARY;
-  end;
+  Result := GetModernStrongColor(FTipo);
 end;
 
 function TModernToastForm.GetSymbol: string;

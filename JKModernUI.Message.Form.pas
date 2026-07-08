@@ -1,11 +1,11 @@
-﻿unit JKModernUI.Message.Form;
+unit JKModernUI.Message.Form;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls,
-  JKModernUI.Message;
+  JKModernUI.Message, JKModernUI.Icons, JKModernUI.Colors;
 
 const
   CORNER_RADIUS = 25;
@@ -61,6 +61,7 @@ type
     procedure AplicarIcone;
     procedure AjustarControles;
     procedure AplicarCantosArredondados;
+    function GetBackgroundColor: TColor;
     function GetBorderColor: TColor;
   public
     procedure Configurar(const ATitulo, ATexto: string; ATipo: TModernMessageType; ABotoes: TModernButtons);
@@ -129,9 +130,12 @@ end;
 procedure TModernMessageForm.FormPaint(Sender: TObject);
 var
   CorBorda: TColor;
+  CorFundo: TColor;
   R: TRect;
+  SavedDC: Integer;
 begin
   CorBorda := GetBorderColor;
+  CorFundo := GetBackgroundColor;
 
   // Draw the outer rounded rectangle (border color)
   Canvas.Brush.Color := CorBorda;
@@ -144,23 +148,29 @@ begin
   Canvas.Pen.Color := clWhite;
   Canvas.RoundRect(BORDER_SIZE, BORDER_SIZE, Width - BORDER_SIZE, Height - BORDER_SIZE, CORNER_RADIUS - BORDER_SIZE, CORNER_RADIUS - BORDER_SIZE);
 
-  // Draw the header with the border color
+  // Draw the header using the inner rounded shape clipped to the top area,
+  // so both the upper and lower dialog corners remain intact.
   R.Left := BORDER_SIZE;
   R.Top := BORDER_SIZE;
   R.Right := Width - BORDER_SIZE;
   R.Bottom := BORDER_SIZE + 60;
 
-  Canvas.Brush.Color := CorBorda;
-  Canvas.Pen.Color := CorBorda;
-
-  // Draw top part of header (flat since it's at the top)
-  Canvas.Rectangle(R.Left, R.Top, R.Right, R.Bottom);
-
-  // Round the top-left and top-right corners of the header
-  Canvas.Pen.Color := CorBorda;
-  Canvas.Brush.Color := CorBorda;
-  Canvas.Ellipse(R.Left, R.Top, R.Left + CORNER_RADIUS * 2, R.Top + CORNER_RADIUS * 2);
-  Canvas.Ellipse(R.Right - CORNER_RADIUS * 2, R.Top, R.Right, R.Top + CORNER_RADIUS * 2);
+  SavedDC := SaveDC(Canvas.Handle);
+  try
+    IntersectClipRect(Canvas.Handle, R.Left, R.Top, R.Right, R.Bottom);
+    Canvas.Brush.Color := CorFundo;
+    Canvas.Pen.Color := CorFundo;
+    Canvas.RoundRect(
+      BORDER_SIZE,
+      BORDER_SIZE,
+      Width - BORDER_SIZE,
+      Height - BORDER_SIZE,
+      CORNER_RADIUS - BORDER_SIZE,
+      CORNER_RADIUS - BORDER_SIZE
+    );
+  finally
+    RestoreDC(Canvas.Handle, SavedDC);
+  end;
 end;
 
 procedure TModernMessageForm.FormResize(Sender: TObject);
@@ -233,6 +243,9 @@ var
   Radius: Integer;
   Simbolo: string;
 begin
+  if TryLoadModernIcon(imgIcon, FTipo) then
+    Exit;
+
   case FTipo of
     mtPrimary:
       begin
@@ -328,12 +341,14 @@ end;
 procedure TModernMessageForm.AplicarCores;
 var
   CorBorda: TColor;
+  CorFundo: TColor;
 begin
   CorBorda := GetBorderColor;
+  CorFundo := GetBackgroundColor;
 
   lblTitle.Transparent := False;
-  lblTitle.Color := CorBorda;
-  lblTitle.Font.Color := clWhite;
+  lblTitle.Color := CorFundo;
+  lblTitle.Font.Color := CorBorda;
 
   // OK button follows form color
   shpOK.Pen.Color := CorBorda;
@@ -362,16 +377,14 @@ begin
   Invalidate; // Force repaint
 end;
 
+function TModernMessageForm.GetBackgroundColor: TColor;
+begin
+  Result := GetModernLightColor(FTipo);
+end;
+
 function TModernMessageForm.GetBorderColor: TColor;
 begin
-  case FTipo of
-    mtPrimary: Result := $007B2423;
-    mtSuccess: Result := $003C7634;
-    mtWarning: Result := $00138ED9;
-    mtDanger: Result := $002328D9;
-    mtInfo: Result := $00856404;
-    else Result := $007B2423;
-  end;
+  Result := GetModernStrongColor(FTipo);
 end;
 
 procedure TModernMessageForm.AjustarLayout;
